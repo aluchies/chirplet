@@ -1,0 +1,3 @@
+# Chirplet
+
+This module implements the chirplet transform as described in ...
