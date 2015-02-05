@@ -1,5 +1,5 @@
 import unittest
-import chirplet
+from chirplet import gaussian_chirplet, estimate_gaussian_chirplet_parameters
 
 import numpy as np
 
@@ -9,7 +9,7 @@ class TestCode(unittest.TestCase):
         """
         """
         t = np.linspace(-3, 3, 10 ** 2)
-        y = chirplet.gaussian_chirplet(t)
+        y = gaussian_chirplet(t)
 
         y0 = np.array([  2.46819608e-04 +1.81360106e-19j,
          3.28420192e-04 +1.31479611e-04j,
@@ -115,6 +115,24 @@ class TestCode(unittest.TestCase):
         self.assertTrue(np.allclose(y, y0))
 
 
+
+    def test1_estimate_guassian_chirplet_parameters(self):
+        """
+        """
+
+        t = np.linspace(-3, 3, 10 ** 3)
+        y = gaussian_chirplet(t, alpha1=1., alpha2=0., beta=2., fc=1., phi=0.,
+            tau=0.)
+        y = np.real(y)
+
+        parameters = estimate_gaussian_chirplet_parameters(y, t)
+
+        self.assertTrue(np.allclose(parameters['alpha1'], 1.0, atol=1e-01))
+        self.assertTrue(np.allclose(parameters['alpha2'], 0.0, atol=1e-01))
+        self.assertTrue(np.allclose(parameters['beta'], 2.0, atol=1e-01))
+        self.assertTrue(np.allclose(parameters['fc'], 1.0, atol=1e-01))
+        self.assertTrue(np.allclose(parameters['phi'], 0.0, atol=1e-01))
+        self.assertTrue(np.allclose(parameters['tau'], 0.0, atol=1e-01))
 
 if __name__ == '__main__':
     print 'Running unit tests for chirplet'

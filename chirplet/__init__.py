@@ -1,1 +1,1 @@
-from chirplet import gaussian_chirplet
+from chirplet import gaussian_chirplet, estimate_gaussian_chirplet_parameters
